@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Hello, WebVR! • A-Frame</title>
+  <meta name="description" content="Hello, WebVR! • A-Frame">
+  <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+  <script src="https://unpkg.com/obniz@2.3.0/obniz.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <a-scene background="color: #FAFAFA">
+   
+    <a-text id="cylinder" position="0.5 1 -2" color="#000000" value="A"></a-text>
+    <a-text position="-2 1 -2" color="#000000" value="pple"></a-text>
+    <a-text position="-5 1 -2" color="#000000" value="ndroid"></a-text>
+    <a-text position="-8 1 -2" color="#000000" value="ction"></a-text>
+    <a-text position="-11 1 -2" color="#000000" value="rt"></a-text>
+    
+  </a-scene>
+
+  <script>
+    var sceneEl = document.querySelector('a-scene');
+    var cylinder = sceneEl.querySelector('#cylinder');
+
+    // 初期位置の記録
+    let defaultX = cylinder.object3D.position.x;
+
+    var obniz = new Obniz("2180-0676");  // 自分のObniz_IDをいれましょう。
+
+    obniz.onconnect = async function () {
+      obniz.display.clear();
+      obniz.display.print("3D A-Frame");
+      obniz.display.print("　↑↓");
+      obniz.display.print("obniz");
+      obniz.switch.onchange = function (state) {
+        if (state === "push") {
+          obniz.display.print("push");
+          cylinder.object3D.position.x = defaultX;
+        } else if (state === "right") {
+          obniz.display.print("right");
+          cylinder.object3D.position.x += 0.3;
+        } else if (state === "left") {
+          obniz.display.print("left");
+          cylinder.object3D.position.x -= 0.3;
+        } else {
+          obniz.display.clear();
+        }
+      }
+    }
+
+  </script>
+</body>
+
+</html>
